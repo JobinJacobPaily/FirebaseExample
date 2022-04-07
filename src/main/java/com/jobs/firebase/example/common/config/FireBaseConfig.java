@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 import static com.jobs.firebase.example.common.config.LoggerConfig.LOGGER;
@@ -27,7 +29,7 @@ public class FireBaseConfig {
                     .setCredentials(GoogleCredentials.fromStream( new ClassPathResource(firebaseConfFile)
                             .getInputStream())).build();
             if(FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp();
+                FirebaseApp.initializeApp(firebaseOptions);
                 LOGGER.info("Firebase initialized successfully .");
             }
         } catch (IOException e) {
